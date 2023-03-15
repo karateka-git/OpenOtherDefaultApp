@@ -68,6 +68,12 @@ class MainFragment : Fragment() {
 //                    startActivity(sendIntent)
 //              }
             }
+            callButton.setOnClickListener {
+                val callIntent: Intent =
+                    Intent(Intent.ACTION_DIAL, Uri.parse("tel:5551234"))
+                val shareIntent = Intent.createChooser(callIntent, null)
+                startActivity(shareIntent)
+            }
         }
     }
 }
