@@ -1,9 +1,6 @@
 package com.example.openOtherDefaultApp.ui.main
 
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.content.pm.PackageManager.MATCH_ALL
-import android.content.pm.PackageManager.MATCH_DEFAULT_ONLY
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +20,10 @@ class MainFragment : Fragment() {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var binding: FragmentMainBinding
+    private val requestImageResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            Log.d("VLADISLAV", "ok")
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +74,12 @@ class MainFragment : Fragment() {
                     Intent(Intent.ACTION_DIAL, Uri.parse("tel:5551234"))
                 val shareIntent = Intent.createChooser(callIntent, null)
                 startActivity(shareIntent)
+            }
+            requestImageButton.setOnClickListener {
+                val requestFileIntent = Intent(Intent.ACTION_PICK).apply {
+                    type = "image/jpg"
+                }
+                requestImageResultLauncher.launch(requestFileIntent)
             }
         }
     }
